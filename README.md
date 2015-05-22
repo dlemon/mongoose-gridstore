@@ -27,9 +27,6 @@ var emailSchema = new mongoose.Schema({
 });
 
 emailSchema.plugin(gridStore);
-
-var Email = mongoose.model('Email', emailSchema);
-var email = new Email();
 ```
 
 #### Plugin options
@@ -39,7 +36,7 @@ emailSchema.plugin(gridStore, {
 	mongoose    : mongoose, 			       //optional, defaults to the latest mongoose version.			    
 	keys        : ['property1', 'property2'],  //optional, property names that you want to add to the attachment object.
 	lazyLoading : true						   //optional, defaults to false	
-}
+});
 ```
 
 ### Adding an attachment
@@ -64,9 +61,9 @@ email.attachments.forEach(function(attachment) {
 
 ```javascript
 var attachment = {
-	filename : '',
-	buffer   : new Buffer(),
-	mime-type: ''
+	filename : '',				//the filename of the attachment
+	buffer   : new Buffer(),	//buffer object with the content of your attachment
+	mime-type: ''				//mime-type of your attachment
 };
 ```
 If you have specified the keys option, these keys are added automatically as properties to the attachment object:
