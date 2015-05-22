@@ -33,9 +33,12 @@ var email = new Email();
 ```javascript
 
 emailSchema.plugin(gridStore, {
-	mongoose    : mongoose, 				    //optional, pass the mongoose module your app is using. Defaults to the latest mongoose version.
-	keys        : ['property1', 'property2'], 	//optional, array of strings of property names that you want to add to an attachment object.
-	lazyLoading : true							//optional, boolean that indicates if attachments are lazy loaded in query results. Defaults to false
+    //optional, defaults to the latest mongoose version.
+	mongoose    : mongoose, 				    
+	//optional, property names that you want to add to the attachment object.
+	keys        : ['property1', 'property2'], 	
+	//optional, defaults to false
+	lazyLoading : true							
 }
 ```
 
@@ -46,7 +49,7 @@ Once you have decorated your schema as shown above you can start adding attachme
 var email = new Email();
 
 email.addAttachment("file.json", buffer);
-```javascript
+```
 
 ### Accessing attachments
 
@@ -86,7 +89,7 @@ email.save(function(err) {
 });
 ```
 
-### Retrieving attachments in case you are not lazy loading
+### Retrieving attachments
 Default lazy loading is turned off, so you have to load attachments yourself:
 
 ```javascript
