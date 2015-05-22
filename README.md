@@ -63,7 +63,7 @@ email.attachments.forEach(function(attachment) {
 });
 ```
 
-### Attachment object
+#### Attachment object
 
 ```javascript
 var attachment = {
@@ -114,8 +114,8 @@ email.loadAttachments()
 ```javascript
 
 email.updateAttachment('file.json', buffer)
-.then(function(attachments) {
-	//modified attachments are loaded, and given back by the promise
+.then(function(attachment) {
+	//modified attachment is given back by the promise
 })
 .catch(function(err) {
 	console.log('error removing attachment');
@@ -127,8 +127,8 @@ email.updateAttachment('file.json', buffer)
 
 ```javascript
 email.removeAttachment('file.json')
-.then(function(attachments) {
-	//modified attachments are loaded, and given back by the promise
+.then(function() {
+	//attachment is removed
 })
 .catch(function(err) {
 	console.log('error removing attachment');
