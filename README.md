@@ -35,13 +35,10 @@ var email = new Email();
 #### Plugin options
 ```javascript
 
-emailSchema.plugin(gridStore, {
-    //optional, defaults to the latest mongoose version.
-	mongoose    : mongoose, 				    
-	//optional, property names that you want to add to the attachment object.
-	keys        : ['property1', 'property2'], 	
-	//optional, defaults to false
-	lazyLoading : true							
+emailSchema.plugin(gridStore, {    
+	mongoose    : mongoose, 			       //optional, defaults to the latest mongoose version.			    
+	keys        : ['property1', 'property2'],  //optional, property names that you want to add to the attachment object.
+	lazyLoading : true						   //optional, defaults to false	
 }
 ```
 
@@ -97,7 +94,7 @@ Default lazy loading is turned off, so you have to load attachments yourself:
 
 ```javascript
 console.log(email.attachments.length); //should be 0
-//load the attachments stored for this object
+
 email.loadAttachments()
 .then(function(attachments) {
 	//attachments are loaded, and given back by the promise
@@ -118,7 +115,7 @@ email.updateAttachment('file.json', buffer)
 	//modified attachment is given back by the promise
 })
 .catch(function(err) {
-	console.log('error removing attachment');
+	console.log('error updating attachment');
 	throw err;
 });
 ```
