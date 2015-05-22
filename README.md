@@ -27,6 +27,7 @@ var emailSchema = new mongoose.Schema({
 });
 
 emailSchema.plugin(gridStore);
+var Email = mongoose.model('Email', emailSchema);
 ```
 
 #### Plugin options

@@ -1,6 +1,6 @@
 {
     "name": "mongoose-gridstore",
-    "version": "0.1.4",
+    "version": "0.1.5",
     "description": "Mongoose plugin for storing attachments to your document schema",
 	"author":"Dennis Lemon <dennis.lemon@sudselekt.com>",
 	"scripts": {
