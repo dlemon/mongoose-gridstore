@@ -1,5 +1,5 @@
 # mongoose-gridstore
-mongoose plugin for storing attachments to your document schema
+mongoose plugin for storing attachments to your document schema.
 
 ## Installation
 
@@ -9,8 +9,11 @@ npm install mongoose-gridstore
 
 or add it to your `package.json`.
 
+## Status
+This package contains the interface description only. Implementation is ready May 25th.
+
 ## Usage
-This module is a mongoose plugin that decorates your schema with attachments
+This module is a mongoose plugin that decorates your schema with attachments.
 
 ### Schema decoration
 ```javascript
@@ -43,7 +46,7 @@ emailSchema.plugin(gridStore, {
 ```
 
 ### Adding an attachment
-Once you have decorated your schema as shown above you can start adding attachments
+Once you have decorated your schema as shown above you can start adding attachments.
 
 ```javascript
 var email = new Email();
@@ -93,8 +96,7 @@ email.save(function(err) {
 Default lazy loading is turned off, so you have to load attachments yourself:
 
 ```javascript
-//prints 0
-console.log(email.attachments.length);
+console.log(email.attachments.length); //should be 0
 //load the attachments stored for this object
 email.loadAttachments()
 .then(function(attachments) {
@@ -107,3 +109,30 @@ email.loadAttachments()
 	throw err;
 });
 ```
+
+### Updating attachments
+```javascript
+
+email.updateAttachment('file.json', buffer)
+.then(function(attachments) {
+	//modified attachments are loaded, and given back by the promise
+})
+.catch(function(err) {
+	console.log('error removing attachment');
+	throw err;
+});
+```
+
+### Removing attachments
+
+```javascript
+email.removeAttachment('file.json')
+.then(function(attachments) {
+	//modified attachments are loaded, and given back by the promise
+})
+.catch(function(err) {
+	console.log('error removing attachment');
+	throw err;
+});
+```
+
