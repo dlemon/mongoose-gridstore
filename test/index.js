@@ -1,11 +1,11 @@
 'use strict';
-require('should');
+var should = require('chai').should();
 
 var mongoose = require('mongoose');
 var gridStore = require('../index.js');
 var URI = 'mongodb://localhost/test';
 
-describe('The plugin',function() {
+describe('Schema decoration',function() {
    var email;
 
     before(function(done) {
@@ -15,9 +15,9 @@ describe('The plugin',function() {
             } 
           
             var emailSchema = new mongoose.Schema({
-                from   : {type:String},
-                to     : {type:String},
-                subject: {type:String}
+                from   : {type:String, default:''},
+                to     : {type:String, default:''},
+                subject: {type:String, default:''}
             });
             
             emailSchema.plugin(gridStore);
@@ -26,4 +26,11 @@ describe('The plugin',function() {
             done();
        });
     });       
+    
+    it('should decorate with an attachments array', function() {
+       email.should.have.property('attachments'); 
+       email.attachments.should.be.an('Array');
+    });
+    
+    
 });

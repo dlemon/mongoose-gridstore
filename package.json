@@ -18,7 +18,8 @@
     "dependencies": {
         "mongoose": "latest",
 		"q": "latest",
-		"mime-types":"latest"
+		"mime-types":"latest",
+        "chai":"latest"
     },
 	"repository": {
 		"type": "git",
