@@ -21,7 +21,7 @@
 		"mime-types":"latest",
         "chai":"latest",
         "mocha":"latest",
-        "rwlock":"latest",
+        "rwlock":"latest"
     },
 	"repository": {
 		"type": "git",
