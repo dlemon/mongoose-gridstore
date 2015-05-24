@@ -1,19 +1,15 @@
 # mongoose-gridstore
-mongoose plugin for storing attachments to your document schema.
+Promise based mongoose plugin for storing large size attachments to your document schema.
 
 ## Installation
 
 ```shell
 npm install mongoose-gridstore
 ```
-
 or add it to your `package.json`.
 
-## Status
-This package contains the interface description only. Implementation is ready May 25th.
-
 ## Usage
-This module is a mongoose plugin that decorates your schema with attachments.
+This module is a mongoose plugin that decorates your schema with large size attachments.
 
 ### Schema decoration
 ```javascript
@@ -34,9 +30,8 @@ var Email = mongoose.model('Email', emailSchema);
 ```javascript
 
 emailSchema.plugin(gridStore, {    
-	mongoose    : mongoose, 			       //optional, defaults to the latest mongoose version.			    
-	keys        : ['property1', 'property2'],  //optional, property names that you want to add to the attachment object.
-	lazyLoading : true						   //optional, defaults to false	
+	keys     : ['property1', 'property2'],  //optional, property names that you want to add to the attachment object.
+    mongoose : mongoose  //optional, the mongoose instance your app is using. Defaults to latest mongoose version.
 });
 ```
 
@@ -46,7 +41,13 @@ Once you have decorated your schema as shown above you can start adding attachme
 ```javascript
 var email = new Email();
 
-email.addAttachment("file.json", buffer);
+email.addAttachment("file.txt", new Buffer('test'))
+.then(function(doc) {
+    //email contains the attachment. promise returns the doc for further promise chaining.
+})
+.catch(function(err) {
+    throw err;
+});
 ```
 
 ### Accessing attachments
@@ -67,50 +68,66 @@ var attachment = {
 	mime-type: ''				//mime-type of your attachment
 };
 ```
-If you have specified the keys option, these keys are added automatically as properties to the attachment object:
+If you have specified the keys option, these keys are added automatically as properties to the attachment object.
+The keys will be stored as meta-data in the gridstore. Keys are explicitly updated as follows:
 
 ```javascript
 email.attachments.forEach(function(attachment) {
-	attachment.property1 = <any javascript object you like>
+	attachment.property1 = 'test property 1'  //any javascript object you like
+    attachment.property2 = 'test property 2'  //any javascript object you like
+});
+
+email.save();
+```
+
+### Retrieving attachments
+
+```javascript
+email.loadAttachments()
+.then(function(doc) {
+    //your email object now contains the attachments
+    console.log(doc.attachments.length); 
+})
+.catch(function(err) {
+    throw err;
 });
 ```
 
-### Saving an attachment
-Done automatically when you save the object it is attached too:
+### Saving attachments
+When you save the document its attachements are stored in the gridstore. The pre-middleware detaches the buffer, keys etc. from the attachments
+because mongodb cannot store large files. Since mongoose does not contain post middleware to manipulate the document after a save, 
+you have to reload attachments yourself right after a save (or find for that matter):
 
 ```javascript
 var email = new Email();
 
-email.addAttachment("file.json", buffer);
-email.save(function(err) {
-	throw err;
-});
-```
-
-### Retrieving attachments
-Default lazy loading is turned off, so you have to load attachments yourself:
-
-```javascript
-console.log(email.attachments.length); //should be 0
-
-email.loadAttachments()
-.then(function(attachments) {
-	//attachments are loaded, and given back by the promise
-	//your email object now contains the attachments
-	console.log(email.attachments.length);
+email.addAttachment("file.txt", new Buffer('test'))
+.then(function() {
+    return email.save();
+})
+.then(email.loadAttachments)
+.then(function(doc) {
+    //doc now contains all attachments again after a save.
 })
 .catch(function(err) {
-	console.log('error loading attachments');
-	throw err;
+    throw(err);
 });
+
+//Query and loadAttachments
+Email.find({}, function(err,docs) {
+    if(err) throw err;
+    docs.forEach(function(doc) {
+        doc.loadAttachments.done();
+    });
+})
 ```
 
 ### Updating attachments
 ```javascript
 
-email.updateAttachment('file.json', buffer)
-.then(function(attachment) {
-	//modified attachment is given back by the promise
+email.updateAttachment('file.txt', new Buffer('updated test'))
+.then(function(doc) {
+	//modified document including attachments is given back by the promise for further chaining.
 })
 .catch(function(err) {
 	console.log('error updating attachment');
@@ -122,8 +139,8 @@ email.updateAttachment('file.json', buffer)
 
 ```javascript
 email.removeAttachment('file.json')
-.then(function() {
-	//attachment is removed
+.then(function(doc) {
+	//modified document including updated attachments is given back by the promise
 })
 .catch(function(err) {
 	console.log('error removing attachment');
@@ -131,3 +148,6 @@ email.removeAttachment('file.json')
 });
 ```
 
+### Test
+Above scenarios have been tested and can be found in the test directory of the node module. 
+You can verify the package by executing mocha test in the root of the module.
