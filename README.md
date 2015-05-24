@@ -65,7 +65,7 @@ email.attachments.forEach(function(attachment) {
 var attachment = {
 	filename : '',				//the filename of the attachment
 	buffer   : new Buffer(),	//buffer object with the content of your attachment
-	mime-type: ''				//mime-type of your attachment
+	mimetype : ''				//mime-type of your attachment
 };
 ```
 If you have specified the keys option, these keys are added automatically as properties to the attachment object.
