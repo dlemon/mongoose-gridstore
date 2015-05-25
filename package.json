@@ -1,6 +1,6 @@
 {
     "name": "mongoose-gm",
-    "version": "0.1.1",
+    "version": "0.1.9",
     "description": "Mongoose plugin for storing image attachments to your document schema",
 	"author":"Dennis Lemon <dennis.lemon@sudselekt.com>",
 	"scripts": {
@@ -10,29 +10,30 @@
         "mongoose",
         "mongoose-plugin",
         "mongodb",
-		"gridstore",
-		"attachements",
+	"gridstore",
+	"attachements",
         "mongoose-gridstore",
         "imagemagick",
         "images"
     ],
     "main": "index.js",
     "dependencies": {
-        "mongoose-gridstore": "latest",
-		"q": "latest",
-		"mime-types":"latest",
+        "mongoose": "latest",
+	"q": "latest",
+	"mime-types":"latest",
         "rwlock":"latest"
     },
     "devDependencies": {
         "mocha": "latest",
         "chai": "latest"
     },
-	"repository": {
-		"type": "git",
-		"url": "git@github.com:dlemon/mongoose-gridstore.git"
-	},
+    "repository": {
+        "type": "git",
+	"url": "git@github.com:dlemon/mongoose-gridstore.git"
+    },
     "license": "MIT",
-	"engines": {
-		"node": ">=0.10"
+        "engines": {
+	    "node": ">=0.10"
 	}
+    }
 }
