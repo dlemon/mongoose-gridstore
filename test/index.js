@@ -49,10 +49,6 @@ describe('Schema decoration',function() {
        email.should.have.property('removeAttachment'); 
        email.removeAttachment.should.be.an('Function');
     });
-    it('should decorate with a root function', function() {
-       email.should.have.property('root'); 
-       email.root.should.be.an('Function');
-    });
 
     after(function(done) {
         mongoose.connection.close(function(err) {
