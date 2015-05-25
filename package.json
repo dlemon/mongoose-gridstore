@@ -1,7 +1,7 @@
 {
-    "name": "mongoose-gridstore",
-    "version": "0.1.8",
-    "description": "Mongoose plugin for storing attachments to your document schema",
+    "name": "mongoose-gm",
+    "version": "0.1.1",
+    "description": "Mongoose plugin for storing image attachments to your document schema",
 	"author":"Dennis Lemon <dennis.lemon@sudselekt.com>",
 	"scripts": {
 		"test": "NODE_ENV=test mocha -R spec test/"
@@ -12,11 +12,13 @@
         "mongodb",
 		"gridstore",
 		"attachements",
-        "mongoose-gridstore"
+        "mongoose-gridstore",
+        "imagemagick",
+        "images"
     ],
     "main": "index.js",
     "dependencies": {
-        "mongoose": "latest",
+        "mongoose-gridstore": "latest",
 		"q": "latest",
 		"mime-types":"latest",
         "rwlock":"latest"
