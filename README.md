@@ -153,3 +153,11 @@ email.removeAttachment('file.json')
 ### Test
 Above scenarios have been tested and can be found in the test directory of the node module. 
 You can verify the package by executing mocha test in the root of the module.
+
+[license-image]: https://img.shields.io/badge/license-MIT-blue.svg?style=flat
+[license-url]: license.txt
+
+[npm-url]: https://npmjs.org/package/mongoose-gridstore
+[npm-version-image]: https://img.shields.io/npm/v/mongoose-gridstore.svg?style=flat
+[npm-downloads-image]: https://img.shields.io/npm/dm/mongoose-gridstore.svg?style=flat
+
