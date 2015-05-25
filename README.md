@@ -1,4 +1,4 @@
-[![NPM version][npm-version-image]] ![alt tag](https://travis-ci.org/dlemon/mongoose-gridstore.svg?branch=master)
+![alt tag](https://travis-ci.org/dlemon/mongoose-gridstore.svg?branch=master) ![NPM version][npm-version-image] 
 
 # mongoose-gridstore
 Promise based mongoose plugin for storing large size attachments to your document schema.
