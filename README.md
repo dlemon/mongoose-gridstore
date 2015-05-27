@@ -11,7 +11,10 @@ npm install mongoose-gridstore
 or add it to your `package.json`.
 
 ## Usage
-This module is a mongoose plugin that decorates your schema with large size attachments.
+This module is a mongoose plugin that decorates your schema with large size attachments. 
+
+### Granularity
+You have the ability to partially/fully load all attachments or do the same for a single attachment.
 
 ### Schema decoration
 ```javascript
@@ -36,6 +39,8 @@ emailSchema.plugin(gridStore, {
     mongoose : mongoose  //optional, the mongoose instance your app is using. Defaults to latest mongoose version.
 });
 ```
+
+## API
 
 ### Adding an attachment
 Once you have decorated your schema as shown above you can start adding attachments.
@@ -149,6 +154,61 @@ email.removeAttachment('file.json')
 	throw err;
 });
 ```
+
+### Loading attachments
+
+#### Load all attachments
+
+```javascript
+email.loadAttachments()
+.then(function(doc) {
+	//All attachments including buffers are in the attachments array.
+})
+.catch(function(err) {
+	console.log('error loading all attachments');
+	throw err;
+});
+```
+
+#### Partially load all attachments
+
+```javascript
+email.partialLoadAttachments()
+.then(function(doc) {
+	//All attachments are in the attachments array. Buffers are empty for each attachment.
+})
+.catch(function(err) {
+	console.log('error partial loading all attachments');
+	throw err;
+});
+```
+
+#### Partially load a single attachment
+
+```javascript
+email.partialLoadSingleAttachment('file.json')
+.then(function(doc) {
+	//only filename, keys and mimetype filled in the attachment. Buffer is empty.
+})
+.catch(function(err) {
+	console.log('error partial loading attachment');
+	throw err;
+});
+```
+
+#### Full load of a single attachment
+
+```javascript
+email.loadSingleAttachment('file.json')
+.then(function(doc) {
+	//attachment is fully loaded and stored in the attachments array.
+})
+.catch(function(err) {
+	console.log('error full loading attachment');
+	throw err;
+});
+```
+
 
 ### Test
 Above scenarios have been tested and can be found in the test directory of the node module. 
