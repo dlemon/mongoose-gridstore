@@ -127,7 +127,7 @@ describe('Scenario update - updateAttachment',function() {
     it('should update Attachments', function(done){
          email.addAttachment("file.txt", new Buffer('test'))
         .then(function(doc) {
-                return doc.updateAttachment('file.txt', new Buffer('updated test'));
+            return doc.updateAttachment('file.txt', new Buffer('updated test'));
         })
         .then(function(doc) {
                 return doc.save();
