@@ -87,12 +87,19 @@ describe('Scenario insert - addAttachment',function() {
     });       
     
     it('should add an attachment', function(done) {
-        email.addAttachment("file.txt", new Buffer('test'))
+        email.addAttachment("file.txt", new Buffer('test', 'base64'))
         .then(function(doc) {
+            return doc.save();
+        })
+        .then(function(doc) {
+            return doc.loadAttachments();
+        })
+        .then(function(doc) {
+            
             if (doc.attachments.length != 1) return done('attachment not added');
             if(doc.attachments[0].filename != 'file.txt') return done('filename <> file.txt');
             if(doc.attachments[0].mimetype != 'text/plain; charset=utf-8') return done('mimetype <> txt/plain');
-            if(doc.attachments[0].buffer.toString('utf8') != 'test') return done('buffer <> test');
+            if(doc.attachments[0].buffer.toString('base64') != (new Buffer('test','base64')).toString('base64')) return done('buffer <> test');
             done();
         })
         .catch(function(err) {
@@ -125,9 +132,10 @@ describe('Scenario update - updateAttachment',function() {
     });       
     
     it('should update Attachments', function(done){
-         email.addAttachment("file.txt", new Buffer('test'))
+        var buf = new Buffer('updated test','base64');
+         email.addAttachment("file.txt", new Buffer('test', 'base64'))
         .then(function(doc) {
-            return doc.updateAttachment('file.txt', new Buffer('updated test'));
+            return doc.updateAttachment('file.txt', buf);
         })
         .then(function(doc) {
                 return doc.save();
@@ -139,7 +147,7 @@ describe('Scenario update - updateAttachment',function() {
             if(doc.attachments.length != 1) return done('attachment not retrieved');
             if(doc.attachments[0].filename != 'file.txt') return done('filename <> file.txt');
             if(doc.attachments[0].mimetype != 'text/plain; charset=utf-8') return done('mimetype <> txt/plain');
-            if(doc.attachments[0].buffer.toString('utf8') != 'updated test') return done('buffer <> updated test');
+            if(doc.attachments[0].buffer.toString('base64') != buf.toString('base64')) return done('buffer <> updated test');
             done();
         })
         .catch(function(err) { 
