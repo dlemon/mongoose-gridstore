@@ -5,11 +5,11 @@ var mongoose = require('mongoose');
 var gridStore = require('../index.js');
 var URI = 'mongodb://localhost/test';
 
-var email;
 var emailSchema;
 
 describe('Schema decoration',function() {
-
+    var email;
+    
     before(function(done) {
        mongoose.connect(URI, function(err){
             if (err) {
@@ -290,6 +290,39 @@ describe('Partial load attachments',function() {
                 if(attachment.property1 != 'test property1') return done('test property 1 not read back');
                 if(attachment.property2 != 'test property2') return done('test property 2 not read back');
                 if(attachment.buffer.length != 0) return done('buffer is not empty');
+            });
+            
+            if(doc.attachments[0].filename != '1.txt') return done('filename incorrect');
+            if(doc.attachments[1].filename != '2.txt') return done('filename incorrect');
+            
+            done();
+        })
+        .catch(function(err) { 
+            done(err);
+        });
+    }); 
+    
+     it('should not be saved after consecutive partial loads', function(done){
+        email.partialLoadAttachments()
+        .then(function(doc) {
+            return doc.save();
+        })
+        .then(function(doc) {
+            return doc.partialLoadAttachments();
+        })
+        .then(function(doc) {
+            return doc.save();
+        })
+        .then(function(doc) {
+            return doc.loadAttachments();
+        })
+        .then(function(doc) {
+            if (doc.attachments.length != 2) return done('attachments not retrieved');
+            
+            doc.attachments.forEach(function(attachment) {
+                if(attachment.property1 != 'test property1') return done('test property 1 not read back');
+                if(attachment.property2 != 'test property2') return done('test property 2 not read back');
+                if(attachment.buffer.length <= 0) return done('buffer is empty');
             });
             
             if(doc.attachments[0].filename != '1.txt') return done('filename incorrect');
