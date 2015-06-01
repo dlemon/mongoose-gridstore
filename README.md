@@ -12,6 +12,7 @@ or add it to your `package.json`.
 
 ## Usage
 This module is a mongoose plugin that decorates your schema with large size attachments. 
+Attachments are stored as base64 strings.
 
 ### Granularity
 You have the ability to partially/fully load all attachments or do the same for a single attachment.
@@ -70,9 +71,6 @@ email.attachments.forEach(function(attachment) {
 
 ```javascript
 var attachment = {
-	filename : '',				//the filename of the attachment
-	buffer   : new Buffer(),	//buffer object with the content of your attachment
-	mimetype : ''				//mime-type of your attachment
 };
 ```
 If you have specified the keys option, these keys are added automatically as properties to the attachment object.

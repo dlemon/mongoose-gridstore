@@ -1,6 +1,5 @@
 {
     "name": "mongoose-gridstore",
-    "version": "0.1.20",
     "description": "Mongoose plugin for storing large sized attachments to your document schema",
 	"author":"Dennis Lemon <dennis.lemon@sudselekt.com>",
 	"scripts": {
@@ -14,7 +13,9 @@
         "attachements",
         "mongoose-gridstore",
         "imagemagick",
-        "images"
+        "images",
+        "base64"
+        
     ],
     "main": "index.js",
     "dependencies": {
