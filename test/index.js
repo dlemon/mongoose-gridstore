@@ -131,8 +131,8 @@ describe('Scenario update - updateAttachment',function() {
     });       
     
     it('should update Attachments', function(done){
-        var buf = new Buffer('updated test','base64');
-         email.addAttachment("file.txt", new Buffer('test', 'base64'))
+        var buf = new Buffer('updated test');
+         email.addAttachment("file.txt", new Buffer('test'))
         .then(function(doc) {
             return doc.updateAttachment('file.txt', buf);
         })
